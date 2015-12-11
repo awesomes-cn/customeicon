@@ -1,0 +1,17 @@
+{
+  "name": "cutomeicon",
+  "version": "0.1.0",
+  "description": "custome fontawesome",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "AwesomesCN",
+  "license": "ISC",
+  "preferGlobal": true,
+  "bin": {
+    "customeicon": "index.js"
+  },
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
+}
