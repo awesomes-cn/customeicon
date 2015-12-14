@@ -1,43 +1,32 @@
 var fs= require('fs');  
 
-var config = {
-  size: 25
-}
-
 
 // .fa-envelope-o:before{content:"\f003"}
 
 var icons = {}
-
+var html = "";
 fs.readFile('font-awesome.min.css','utf-8',function(err,data){ 
-  data.replace(/\.(.+?):.+?{content:"\\f(.+?)"/gi, function(){
-     icons[arguments[2]] = arguments[1]
+  data.replace(/(\.fa-[\w\-,\.\:]+:before)+{content:"\\f(.+?)"/gi, function(){
+    arguments[1].replace(/\.(fa-[\w,-]+):before/gi,function(er,da){
+      html += '<svg class="fa"><use xlink:href="./font-awesome.svg#' + arguments[1] + '"></use></svg>\r\n'
+    }) 
+    
   })
-  //console.log(icons)
-  get_svg();
-  
+  html = '\
+    <!DOCTYPE html>\r\n\
+      <html>\r\n\
+        <head>\r\n\
+          <style type="text/css">\r\n\
+            .fa{width: 25px; height: 25px;}\r\n\
+          </style>\r\n\
+        </head>\r\n\
+        <body style="height: 1000px;">'
+        + html +
+        '</body> \r\n\
+  '
+  fs.writeFile('index.html', html,function(){
+    console.log("Success");
+  })
 })
-
-function get_svg(){
-  var reg = /<glyph unicode="&#xf(.+?);" .+d=(".+?")/gi;
-  var str = '<svg xmlns="http://www.w3.org/2000/svg" style="width:0; height:0; visibility:hidden;">\r\n'
-  fs.readFile('fontawesome-webfont.svg','utf-8',function(err,data){  
-    data.replace(reg, function(){
-      var nm = icons[arguments[1]];
-      str +='<symbol id="'+nm+'" viewBox="0 0 1792 1792">\r\n<path d='+arguments[2]+'/>\r\n</symbol>\r\n';
-    })
-
-    str +='</svg>'
-
-    console.log(str);
-
-
-
-
-  }) 
-
-}
-
-
 
 
