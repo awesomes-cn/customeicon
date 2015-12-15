@@ -1,7 +1,7 @@
 var Promise = require("bluebird"),
-    getIconList = require("./lib/getIconList")
+    getSvgData = require("./lib/getSvgData")
 
 
-Promise.all([getIconList()]).spread(function(data){
-  console.log(data);
+Promise.all([getSvgData()]).spread(function(data){
+  console.log(data.length);
 })
